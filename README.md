@@ -158,27 +158,28 @@ Access:
 
 ### 🔑 Generate Token
 
-    - Login: admin / admin  
-    - Go to My Account → Security  
-    - Generate token  
+- Login: admin / admin  
+- Go to My Account → Security  
+- Generate token  
 
 ---
 
 ### 🔐 Add Credentials in Jenkins
 
-- Type: Secret Text
--  - ID: sonar-token  
+- Type: Secret Text  
+- ID: sonar-token  
 
 ---
 
 ### ⚙️ Configure SonarQube in Jenkins
 
 - Manage Jenkins → Configure System  
-- Add SonarQube Server:
 
-  - Name: sonar  
-  - URL: http://<your-server-ip>:9000  
-  - Credentials: sonar-token  
+Add SonarQube Server:
+
+- Name: sonar  
+- URL: http://<your-server-ip>:9000  
+- Credentials: sonar-token  
 
 ---
 
@@ -189,9 +190,7 @@ Access:
             withSonarQubeEnv('sonar') {
                 sh """
                     mvn sonar:sonar \
-                    -Dsonar.projectKey=datastore \
-                    -Dsonar.host.url=http://<your-server-ip>:9000 \
-                    -Dsonar.login=$SONAR_AUTH_TOKEN
+                    -Dsonar.projectKey=datastore
                 """
             }
         }
@@ -208,8 +207,6 @@ Access:
             }
         }
     }
-
----
 
 ## AWS Setup
 
