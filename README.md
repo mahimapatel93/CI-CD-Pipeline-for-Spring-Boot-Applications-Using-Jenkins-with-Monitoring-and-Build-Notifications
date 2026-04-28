@@ -188,14 +188,14 @@ Add SonarQube Server:
 ### 🚀 Pipeline Stage (SonarQube Analysis)
 
     stage("SonarQube Analysis") {
-        steps {
-            withSonarQubeEnv('sonar') {
-                sh """
-                    mvn sonar:sonar \
-                    -Dsonar.projectKey=datastore
-                """
-            }
+    steps {
+        withSonarQubeEnv('sonar') {
+            sh """
+                mvn clean verify sonar:sonar \
+                -Dsonar.projectKey=datastore
+            """
         }
+      }   
     }
 
 ---
@@ -205,7 +205,7 @@ Add SonarQube Server:
     stage("Quality Gate") {
         steps {
             timeout(time: 2, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true #false
+                waitForQualityGate abortPipeline: true  #false
             }
         }
     }
