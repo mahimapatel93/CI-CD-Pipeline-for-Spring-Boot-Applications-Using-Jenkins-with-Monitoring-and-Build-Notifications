@@ -37,6 +37,7 @@ Source reference: :contentReference[oaicite:0]{index=0}
 - Maven
 - SonarQube 
 - Docker
+- Trivy
 - AWS CLI
 - GitHub repository
 - DockerHub account
