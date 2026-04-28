@@ -462,7 +462,7 @@ Fill:
     post {
         success {
             slackSend(
-                channel: '#practice',
+                channel: '#all-devops-practice',
                 color: 'good',
                 message: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER} completed successfully"
             )
@@ -470,7 +470,7 @@ Fill:
 
         failure {
             slackSend(
-                channel: '#practice',
+                channel: '#all-devops-practicee',
                 color: 'danger',
                 message: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER} failed\n${env.BUILD_URL}"
             )
@@ -478,7 +478,7 @@ Fill:
 
         unstable {
             slackSend(
-                channel: '#practice',
+                channel: '#all-devops-practice',
                 color: 'warning',
                 message: "UNSTABLE: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
             )
@@ -486,7 +486,7 @@ Fill:
 
         aborted {
             slackSend(
-                channel: '#practice',
+                channel: '#all-devops-practice',
                 color: 'warning',
                 message: "ABORTED: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
             )
@@ -494,7 +494,7 @@ Fill:
 
         always {
             slackSend(
-                channel: '#practice',
+                channel: '#all-devops-practice',
                 color: 'good',
                 message: "Build finished: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
             )
