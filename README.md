@@ -86,7 +86,9 @@ Source reference: :contentReference[oaicite:0]{index=0}
   - Stage View  
   - Blue Ocean  
   - Parameterized Trigger  
-  - Slack Notification 
+  - Slack Notification
+  - SonarQube Scanner
+  - Quality Gates
 
 ---
 
