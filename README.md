@@ -236,6 +236,27 @@ Fix:
 
 ---
 
+### ⚙️ Trivy Scan Stage
+
+       stage("Docker Scan (Trivy)") {
+         steps {
+           sh '''
+            echo "-------- Scanning Image --------"
+
+            export TRIVY_TEMP_DIR=/var/lib/jenkins/trivy-temp
+            mkdir -p $TRIVY_TEMP_DIR
+
+            trivy image \
+              --scanners vuln \
+              --timeout 5m \
+              --skip-java-db-update \
+              datastore:${App_Version} || true
+
+            echo "-------- Scan Completed --------"
+        '''
+           }
+       }
+
 ## DockerHub Integration
 
 ### Repository
@@ -381,10 +402,10 @@ Fix:
 
                     echo "-------- Pushed Changes Successfully --------"
                 """
-            }
-        }
+             }
+         }
+      }
     }
-}
 
 ---
 
