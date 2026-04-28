@@ -8,7 +8,7 @@ This project demonstrates a complete CI/CD pipeline integrated with GitOps using
 
 The pipeline automates:
 - Code checkout
-- Build and test
+- Build → Test → SonarQube Analysis → Quality Gate
 - Artifact storage (S3)
 - Docker image creation and push
 - Security scanning
@@ -35,6 +35,7 @@ Source reference: :contentReference[oaicite:0]{index=0}
 - Jenkins
 - Java 21
 - Maven
+- SonarQube 
 - Docker
 - AWS CLI
 - GitHub repository
@@ -139,6 +140,73 @@ Source reference: :contentReference[oaicite:0]{index=0}
                 """
             }
         }
+
+---
+
+### ⚙️ SonarQube Setup
+
+#### Run SonarQube using Docker
+
+    docker run -d --name sonar -p 9000:9000 sonarqube
+
+Access:
+
+    http://<your-server-ip>:9000
+
+---
+
+### 🔑 Generate Token
+
+    - Login: admin / admin  
+    - Go to My Account → Security  
+    - Generate token  
+
+---
+
+### 🔐 Add Credentials in Jenkins
+
+- Type: Secret Text
+-  - ID: sonar-token  
+
+---
+
+### ⚙️ Configure SonarQube in Jenkins
+
+- Manage Jenkins → Configure System  
+- Add SonarQube Server:
+
+  - Name: sonar  
+  - URL: http://<your-server-ip>:9000  
+  - Credentials: sonar-token  
+
+---
+
+### 🚀 Pipeline Stage (SonarQube Analysis)
+
+    stage("SonarQube Analysis") {
+        steps {
+            withSonarQubeEnv('sonar') {
+                sh """
+                    mvn sonar:sonar \
+                    -Dsonar.projectKey=datastore \
+                    -Dsonar.host.url=http://<your-server-ip>:9000 \
+                    -Dsonar.login=$SONAR_AUTH_TOKEN
+                """
+            }
+        }
+    }
+
+---
+
+### ✅ Quality Gate
+
+    stage("Quality Gate") {
+        steps {
+            timeout(time: 2, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+    }
 
 ---
 
