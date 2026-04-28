@@ -240,7 +240,7 @@ Fix:
 
 ### Repository
 
-    bhawnavishwakarma/datastore
+    dockerwithmahi/datastore
 
 ---
 
