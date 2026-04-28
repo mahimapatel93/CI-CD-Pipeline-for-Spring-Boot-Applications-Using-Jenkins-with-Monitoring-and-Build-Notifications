@@ -595,25 +595,34 @@ Fill:
 
 ## 🔄 Final Workflow
 
-    Code Push → GitHub
-            ↓
-    Jenkins CI Pipeline Triggered
-            ↓
-    Build & Test
-            ↓
-    Artifact Uploaded to S3
-            ↓
-    Docker Image Built & Pushed
-            ↓
-    Manual Approval
-            ↓
-    Downstream Pipeline Triggered
-            ↓
-    YAML Updated (GitOps Repo)
-            ↓
-    Kubernetes Deployment via ArgoCD
+    Code Push → GitHub  
+        ↓  
+    Jenkins CI Pipeline Triggered  
+        ↓  
+    Build & Test  
+        ↓  
+    SonarQube Analysis (Code Quality Check)  
+        ↓  
+    Quality Gate Validation  
+        ↓  
+    Artifact Uploaded to S3  
+        ↓  
+    Docker Image Built  
+        ↓  
+    Trivy Scan (Security Check)  
+        ↓  
+    Docker Image Pushed to DockerHub  
+        ↓  
+    Manual Approval  
+        ↓  
+    Downstream Pipeline Triggered  
+        ↓  
+    YAML Updated (GitOps Repo)  
+        ↓  
+    Kubernetes Deployment via ArgoCD  
 
 ---
+
 
 ## ✅ Final Status
 
@@ -621,11 +630,14 @@ Fill:
 - DockerHub integration completed  
 - IAM role configured securely  
 - Docker build issues resolved  
-- Trivy installed for vulnerability scanning  
+- SonarQube integrated for code quality analysis  
+- Quality gate enforced before deployment  
+- Trivy integrated for vulnerability scanning  
 - Downstream pipeline working  
 - GitHub token authentication configured  
 - GitOps deployment enabled  
 - Slack notifications integrated  
+- Fully automated DevSecOps pipeline implemented  
 
 ---
 ---
