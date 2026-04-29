@@ -146,7 +146,7 @@ http://<EC2-PUBLIC-IP>:<NODEPORT>
 
 ---
 
-### ❌ 16. HTTP vs HTTPS Issue
+### ❌ 14. HTTP vs HTTPS Issue
 
 **Reason:** Argo CD uses HTTPS
 
@@ -154,17 +154,11 @@ http://<EC2-PUBLIC-IP>:<NODEPORT>
 
 ---
 
-### ❌ 17. Partial Argo CD Installation
+### ❌ 15. Partial Argo CD Installation
 
 **Reason:** Incomplete install
 
 **Solution:** Reinstalled properly
-
----
-
-### ❌ 18. Repository Fork Issue
-
-**Solution:** Deleted fork, created new repo
 
 ---
 
