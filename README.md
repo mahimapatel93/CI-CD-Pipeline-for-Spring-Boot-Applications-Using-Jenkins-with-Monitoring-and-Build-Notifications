@@ -630,11 +630,27 @@ You must have:
   
 3. Create an IAM Role and attache it to EC2 instance    
    `Note: create IAM user with programmatic access if your bootstrap system is outside of AWS`   
-   IAM user should have access to   
-   IAM   
-   EC2   
-   VPC    
-   CloudFormation
+  You need to attach proper IAM permissions to your EC2 instance role.
+
+🔧 Step 1: Go to AWS Console
+
+    Open Amazon Web Services
+Go to IAM → Roles
+
+    Find your role: ec2-admin
+🔧 Step 2: Attach required policies
+
+Add these policies:
+
+✅ Required for EKS
+
+    AmazonEKSClusterPolicy
+    AmazonEKSWorkerNodePolicy
+    AmazonEKS_CNI_Policy
+✅ Required for EC2 + networking
+
+    AmazonEC2FullAccess (for learning/demo)
+   
 ---
 4. Create your cluster and nodes 
    ```sh
