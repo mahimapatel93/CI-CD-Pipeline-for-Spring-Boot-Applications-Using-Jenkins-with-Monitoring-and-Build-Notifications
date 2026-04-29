@@ -691,7 +691,7 @@ Fill:
 
 ✅ Step 3: Expose ArgoCD UI
 
-    kubectl patch svc argocd-server -n argocd \ -p '{"spec": {"type": "NodePort"}}'
+    kubectl patch svc argocd-server -n argocd  -p '{"spec": {"type": "NodePort"}}'
    Check service:
 
     kubectl get svc -n argocd
