@@ -605,7 +605,7 @@ Fill:
 ---
 
 #### AWS EKS Setup 
-1. Setup kubectl   
+### 1. Setup kubectl   
    a. Download kubectl version 1.20  
    b. Grant execution permissions to kubectl executable   
    c. Move kubectl onto /usr/local/bin   
@@ -617,7 +617,7 @@ Fill:
    kubectl version --short --client
    ```
 --- 
-2. Setup eksctl   
+### 2. Setup eksctl   
    a. Download and extract the latest release   
    b. Move the extracted binary to /usr/local/bin   
    c. Test that your eksclt installation was successful   
@@ -628,7 +628,7 @@ Fill:
    ```
 ---
   
-3. Create an IAM Role and attache it to EC2 instance    
+### 3. Create an IAM Role and attache it to EC2 instance    
    `Note: create IAM user with programmatic access if your bootstrap system is outside of AWS`   
     You need to attach proper IAM permissions to your EC2 instance role.
 
@@ -652,7 +652,7 @@ Fill:
     AmazonEC2FullAccess (for learning/demo)
    
 ---
-4. Create your cluster and nodes 
+### 4. Create your cluster and nodes 
    ```sh
    eksctl create cluster --name cluster-name  \
    --region region-name \
@@ -665,15 +665,16 @@ Fill:
    eksctl create cluster --name mahima \
       --region us-east-1 \
    --node-type t2.small \
-
+```
 ---
-5. To delete the EKS clsuter (if uhh want to delete)
-   ```sh 
-   eksctl delete cluster mahima --region ap-south-1
+
+### 5. To delete the EKS clsuter (if uhh want to delete)
+   ```sh
+      eksctl delete cluster mahima --region ap-south-1
    ```
 ---   
 
-6. Validate your cluster using by creating by checking nodes and by creating a pod 
+### 6. Validate your cluster using by creating by checking nodes and by creating a pod 
    ```sh 
    kubectl get nodes
    ```
