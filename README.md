@@ -154,7 +154,7 @@ Source reference: :contentReference[oaicite:0]{index=0}
 
 Access:
 
-    http://<your-server-ip>:9000
+    http://< your-server-ip >:9000
 
 ---
 
@@ -180,7 +180,7 @@ Access:
 Add SonarQube Server:
 
 - Name: sonar  
-- URL: http://<your-server-ip>:9000  
+- URL: http://< your-server-ip >:9000  
 - Credentials: sonar-token  
 
 ---
