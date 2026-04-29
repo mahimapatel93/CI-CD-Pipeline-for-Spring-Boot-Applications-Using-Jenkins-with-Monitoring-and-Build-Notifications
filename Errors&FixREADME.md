@@ -7,7 +7,9 @@
 ### ❌ 1. GitHub Authentication Failed
 
 **Error:** Invalid username or token
+
 **Reason:** Password auth deprecated
+
 **Solution:** Used GitHub PAT
 
 ---
@@ -15,8 +17,11 @@
 ### ❌ 2. Sonar Scanner Not Found
 
 **Error:** command not found
+
 **Reason:** Not installed
+
 **Solution:** Installed & configured
+
 
 ---
 
