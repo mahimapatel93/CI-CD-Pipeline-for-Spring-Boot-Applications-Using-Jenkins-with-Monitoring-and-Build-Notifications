@@ -103,7 +103,7 @@ Source reference: :contentReference[oaicite:0]{index=0}
                 steps {
                     checkout scmGit(
                         branches: [[name: '*/main']],
-                        userRemoteConfigs: [[url: 'https://github.com/mahimapatel93/CI-CD-Pipeline-for-Spring-Boot-Applications.git']]
+                        userRemoteConfigs: [[url: 'https://github.com/mahimapatel93/CI-CD-Pipeline-for-Spring-Boot-Applications-Using-Jenkins-with-Monitoring-and-Build Notifications.git']]
                     )
                 }
             } 
