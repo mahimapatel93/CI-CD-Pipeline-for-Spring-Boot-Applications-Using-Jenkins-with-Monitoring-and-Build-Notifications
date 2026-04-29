@@ -595,10 +595,10 @@ Fill:
 ## 🚀 ArgoCD Setup (GitOps Deployment)
 ✅ Step 1: Make sure Kubernetes is ready
 
-You must have:
+ You must have:
 
-  A running Kubernetes cluster (EKS / Minikube / K8s on EC2)
-  kubectl configured
+    A running Kubernetes cluster (EKS / Minikube / K8s on EC2)
+    kubectl configured
 
 #### Pre-requisites: 
   - an EC2 Instance
@@ -630,24 +630,24 @@ You must have:
   
 3. Create an IAM Role and attache it to EC2 instance    
    `Note: create IAM user with programmatic access if your bootstrap system is outside of AWS`   
-  You need to attach proper IAM permissions to your EC2 instance role.
+    You need to attach proper IAM permissions to your EC2 instance role.
 
-🔧 Step 1: Go to AWS Console
+  🔧 Step 1: Go to AWS Console
 
     Open Amazon Web Services
-Go to IAM → Roles
+   Go to IAM → Roles
 
     Find your role: ec2-admin
-🔧 Step 2: Attach required policies
+  🔧 Step 2: Attach required policies
 
-Add these policies:
+   Add these policies:
 
-✅ Required for EKS
+  ✅ Required for EKS
 
     AmazonEKSClusterPolicy
     AmazonEKSWorkerNodePolicy
     AmazonEKS_CNI_Policy
-✅ Required for EC2 + networking
+  ✅ Required for EC2 + networking
 
     AmazonEC2FullAccess (for learning/demo)
    
@@ -681,7 +681,7 @@ Add these policies:
 
 ✅ Step 2: Install ArgoCD
    ```sh 
-    kubectl create namespace argocd
+     kubectl create namespace argocd
    ```
    ```sh 
     kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
@@ -691,18 +691,18 @@ Add these policies:
 ✅ Step 3: Expose ArgoCD UI
 
     kubectl patch svc argocd-server -n argocd \ -p '{"spec": {"type": "NodePort"}}'
-Check service:
+   Check service:
 
     kubectl get svc -n argocd
--👉 Note the NodePort (example: 30007)
+   -👉 Note the NodePort (example: 30007)
 ---
 
 ✅ Step 4: Access ArgoCD UI
 
-Open in browser:
-  ```sh 
-    http://<YOUR-EC2-IP>:<NODEPORT>
-  ```
+  Open in browser:
+   ```sh 
+     http://<YOUR-EC2-IP>:<NODEPORT>
+   ```
 ---
 
 ✅ Step 5: Get login password
@@ -711,9 +711,9 @@ Open in browser:
    ```
 ---
 
-Login:
-- Username: admin
-- Password: (command output)
+   Login:
+    - Username: admin
+    - Password: (command output)
 ---
 
 ✅ Step 6: Connect your GitOps repository
@@ -724,40 +724,42 @@ Login:
 
 ✅ Step 7: Create Application in ArgoCD
 
-In ArgoCD UI:
+   In ArgoCD UI:
 
-General:
+   General:
 
-     Application Name: datastore-app
-     Project: default
-Source:
+       Application Name: datastore-app
+       Project: default
+     
+   Source:
 
-    Repo URL: your GitOps repo URL
-    Branch: main
-    Path: folder where YAML exists (e.g. datastore-deploy)
-Destination:
+       Repo URL: your GitOps repo URL
+       Branch: main
+       Path: folder where YAML exists (e.g. datastore-deploy)
+     
+   Destination:
 
-    Cluster: https://kubernetes.default.svc
-    Namespace: default (or your custom namespace)
+       Cluster: https://kubernetes.default.svc
+       Namespace: default (or your custom namespace)
 ---
 
 ✅ Step 8: Enable Auto Sync
 
-Enable:
+   Enable:
 
-    ✅ Auto Sync
-    ✅ Self Heal
+     ✅ Auto Sync
+     ✅ Self Heal
 ---
 
 ✅ Step 9: Deploy Application
 
-Click:
+   Click:
 
-    👉 Create → Sync
+     👉 Create → Sync
     
-Verify Deployment
+   Verify Deployment
      
-    kubectl get pods
+      kubectl get pods
 ---
 
  ## 🔄 Final Workflow
