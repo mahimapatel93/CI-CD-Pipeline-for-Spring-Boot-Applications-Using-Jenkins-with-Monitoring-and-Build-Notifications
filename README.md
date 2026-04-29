@@ -680,38 +680,59 @@ Fill:
    ```
 ---
 
-✅ Step 2: Install ArgoCD
+✅ Step 2: Create the namespace for argoCD
    ```sh 
      kubectl create namespace argocd
    ```
+---
+
+✅ Step 3: Install ArgoCD using the below command
    ```sh 
-    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
    ```
 ---
 
-✅ Step 3: Expose ArgoCD UI
+✅ Step 3: check what resources it has created
+ ```sh 
+    kubectl get all -n argocd
+ ```
 
-    kubectl patch svc argocd-server -n argocd  -p '{"spec": {"type": "NodePort"}}'
-   Check service:
+ ```sh 
+    kubectl get all -n argocd
+ ```
 
+ ```sh 
+    kubectl edit svc argocd-server -n argocd  #enable NodePort 
+ ```
+
+ ```sh
+    kubectl get nodes -n argocd
+ ```
+
+ ```sh
     kubectl get svc -n argocd
-   -👉 Note the NodePort (example: 30007)
+ ```
 ---
 
 ✅ Step 4: Access ArgoCD UI
+ - take any instance public ip and hit browser
 
   Open in browser:
    ```sh 
-     http://<YOUR-EC2-IP>:<NODEPORT>
+     https://<YOUR-EC2-IP>:<NODEPORT ip>
    ```
 ---
 
 ✅ Step 5: Get login password
+
    ```sh 
-    kubectl get secret argocd-initial-admin-secret -n argocd \ -o jsonpath="{.data.password}" | base64 -d
+    kubectl get secret argocd-initial-admin-secret -n argocd -o yaml
+   ```
+ - the secret base64 encoded so, you have to decod the secret by runnig the below command
+   ```sh
+   echo "secret value" | base64 --decode
    ```
 ---
-
    Login:
     - Username: admin
     - Password: (command output)
@@ -731,6 +752,7 @@ Fill:
 
        Application Name: datastore-app
        Project: default
+       sync policy: Automatic
      
    Source:
 
@@ -742,6 +764,10 @@ Fill:
 
        Cluster: https://kubernetes.default.svc
        Namespace: default (or your custom namespace)
+   ```sh
+       kubectl create ns dev
+   ```
+  Create 
 ---
 
 ✅ Step 8: Enable Auto Sync
