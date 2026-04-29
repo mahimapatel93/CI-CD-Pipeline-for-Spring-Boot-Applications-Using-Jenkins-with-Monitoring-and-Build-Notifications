@@ -645,7 +645,7 @@ Fill:
    - AmazonEKSClusterPolicy
    - AmazonEKSWorkerNodePolicy
    - AmazonEKS_CNI_Policy
-   - 
+     
   ✅ Required for EC2 + networking
    - AmazonEC2FullAccess (for learning/demo)
    
@@ -746,18 +746,21 @@ Login:
    In ArgoCD UI:
 
    General:
-      - Application Name: datastore-app
-      - Project: default
-      - sync policy: Automatic
+   
+   - Application Name: datastore-app
+   - Project: default
+   - sync policy: Automatic
      
    Source:
-      - Repo URL: your GitOps repo URL
-      - Branch: main
-      - Path: folder where YAML exists (e.g. datastore-deploy)
+   
+   - Repo URL: your GitOps repo URL
+   - Branch: main
+   - Path: folder where YAML exists (e.g. datastore-deploy)
      
    Destination:
-      - Cluster: https://kubernetes.default.svc
-      - Namespace: default (or your custom namespace)
+   
+   - Cluster: https://kubernetes.default.svc
+   - Namespace: default (or your custom namespace)
    ```sh
        kubectl create ns dev
    ```
@@ -767,14 +770,16 @@ Login:
 ✅ Step 8: Enable Auto Sync
 
    Enable:
-     - ✅ Auto Sync
-     - ✅ Self Heal
+   
+  - ✅ Auto Sync
+  - ✅ Self Heal
 ---
 
 ✅ Step 9: Deploy Application
 
    Click:
-     - Create → Sync
+   
+  - Create → Sync
     
 Verify Deployment
  ```sh
