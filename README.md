@@ -643,14 +643,14 @@ You must have:
    --zones <AZ-1>,<AZ-2>
    
    example:
-   eksctl create cluster --name naresh \
+   eksctl create cluster --name mahima \
       --region us-east-1 \
    --node-type t2.small \
 
 
-5. To delete the EKS clsuter 
+5. To delete the EKS clsuter (if uhh want to delete)
    ```sh 
-   eksctl delete cluster naresh --region ap-south-1
+   eksctl delete cluster mahima --region ap-south-1
    ```
    
 6. Validate your cluster using by creating by checking nodes and by creating a pod 
