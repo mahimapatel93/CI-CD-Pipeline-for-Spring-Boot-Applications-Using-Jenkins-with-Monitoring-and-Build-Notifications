@@ -200,7 +200,7 @@ Add SonarQube Server:
 
 ---
 
-### ✅ Quality Gate
+### ✅ Quality Gate (optional)
 
     stage("Quality Gate") {
         steps {
