@@ -729,13 +729,13 @@ Open in browser:
    kubectl get secret argocd-initial-admin-secret -n argocd -o yaml
 ```
 - the secret base64 encoded so, you have to decod the secret by runnig the below command
-   ```sh
+```sh
    echo "secret value" | base64 --decode
-   ```
+```
    
-   Login:
-    - Username: admin
-    - Password: (command output)
+Login:
+   - Username: admin
+   - Password: (command output)
 ---
 
 ✅ Step 6: Connect your GitOps repository
