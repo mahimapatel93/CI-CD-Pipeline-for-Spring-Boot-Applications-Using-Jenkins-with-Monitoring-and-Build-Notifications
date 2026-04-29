@@ -726,6 +726,10 @@ Click:
 
     👉 Create → Sync
     
+Verify Deployment
+     
+    kubectl get pods
+    
  ## 🔄 Final Workflow
 
     Code Push → GitHub  
