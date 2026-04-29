@@ -601,7 +601,8 @@ You must have:
   kubectl configured
 
 #### Pre-requisites: 
-  - an EC2 Instance 
+  - an EC2 Instance
+---
 
 #### AWS EKS Setup 
 1. Setup kubectl   
@@ -615,6 +616,7 @@ You must have:
    mv ./kubectl /usr/local/bin 
    kubectl version --short --client
    ```
+--- 
 2. Setup eksctl   
    a. Download and extract the latest release   
    b. Move the extracted binary to /usr/local/bin   
@@ -624,6 +626,7 @@ You must have:
    sudo mv /tmp/eksctl /usr/local/bin
    eksctl version
    ```
+---
   
 3. Create an IAM Role and attache it to EC2 instance    
    `Note: create IAM user with programmatic access if your bootstrap system is outside of AWS`   
@@ -632,7 +635,7 @@ You must have:
    EC2   
    VPC    
    CloudFormation
-
+---
 4. Create your cluster and nodes 
    ```sh
    eksctl create cluster --name cluster-name  \
@@ -647,16 +650,18 @@ You must have:
       --region us-east-1 \
    --node-type t2.small \
 
-
+---
 5. To delete the EKS clsuter (if uhh want to delete)
    ```sh 
    eksctl delete cluster mahima --region ap-south-1
    ```
-   
+---   
+
 6. Validate your cluster using by creating by checking nodes and by creating a pod 
    ```sh 
    kubectl get nodes
    ```
+---
 
 ✅ Step 2: Install ArgoCD
    ```sh 
@@ -665,6 +670,7 @@ You must have:
    ```sh 
     kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
    ```
+---
 
 ✅ Step 3: Expose ArgoCD UI
 
@@ -673,6 +679,7 @@ Check service:
 
     kubectl get svc -n argocd
 -👉 Note the NodePort (example: 30007)
+---
 
 ✅ Step 4: Access ArgoCD UI
 
@@ -680,20 +687,24 @@ Open in browser:
   ```sh 
     http://<YOUR-EC2-IP>:<NODEPORT>
   ```
+---
 
 ✅ Step 5: Get login password
    ```sh 
     kubectl get secret argocd-initial-admin-secret -n argocd \ -o jsonpath="{.data.password}" | base64 -d
    ```
+---
 
 Login:
 - Username: admin
 - Password: (command output)
+---
 
 ✅ Step 6: Connect your GitOps repository
 
     This should be your repo where Kubernetes YAML files exist
     (the same repo Jenkins updates using sed)
+---
 
 ✅ Step 7: Create Application in ArgoCD
 
@@ -712,6 +723,7 @@ Destination:
 
     Cluster: https://kubernetes.default.svc
     Namespace: default (or your custom namespace)
+---
 
 ✅ Step 8: Enable Auto Sync
 
@@ -719,6 +731,7 @@ Enable:
 
     ✅ Auto Sync
     ✅ Self Heal
+---
 
 ✅ Step 9: Deploy Application
 
@@ -729,7 +742,8 @@ Click:
 Verify Deployment
      
     kubectl get pods
-    
+---
+
  ## 🔄 Final Workflow
 
     Code Push → GitHub  
