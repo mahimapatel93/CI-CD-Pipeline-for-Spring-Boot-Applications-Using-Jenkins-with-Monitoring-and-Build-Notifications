@@ -28,6 +28,7 @@
 ### ❌ 3. SonarQube Project Not Visible
 
 **Reason:** Wrong key/token
+
 **Solution:** Verified configuration
 
 ---
@@ -35,6 +36,7 @@
 ### ❌ 4. Quality Gate Failure
 
 **Reason:** Code issues
+
 **Solution:** Fixed and re-run
 
 ---
@@ -42,6 +44,7 @@
 ### ❌ 5. Docker Permission Issue
 
 **Reason:** Jenkins not in docker group
+
 **Solution:**
 
 ```
@@ -64,6 +67,7 @@ chmod +x mvnw
 ### ❌ 7. DockerHub Login Failed
 
 **Reason:** Wrong credentials
+
 **Solution:** Used Jenkins credentials
 
 ---
@@ -82,6 +86,7 @@ chmod +x mvnw
 ### ❌ 9. Git Push Permission Denied
 
 **Reason:** No repo access
+
 **Solution:** Used personal repo / token
 
 ---
@@ -95,6 +100,7 @@ chmod +x mvnw
 ### ❌ 11. Slack Not Working
 
 **Reason:** Bot not added
+
 **Solution:** Enabled botUser + invited bot
 
 ---
@@ -102,7 +108,9 @@ chmod +x mvnw
 ### ❌ 12. Argo CD ApplicationSet Error
 
 **Error:** no matches for kind ApplicationSet
+
 **Reason:** Missing CRD
+
 **Solution:** Installed CRD
 
 ---
@@ -114,6 +122,7 @@ chmod +x mvnw
 **Reason:**
 
 * AWS Security Group blocking ports
+  
 * Service misconfiguration
 
 **Mistake:**
@@ -140,6 +149,7 @@ http://<EC2-PUBLIC-IP>:<NODEPORT>
 ### ❌ 16. HTTP vs HTTPS Issue
 
 **Reason:** Argo CD uses HTTPS
+
 **Solution:** Used `https`
 
 ---
@@ -147,6 +157,7 @@ http://<EC2-PUBLIC-IP>:<NODEPORT>
 ### ❌ 17. Partial Argo CD Installation
 
 **Reason:** Incomplete install
+
 **Solution:** Reinstalled properly
 
 ---
