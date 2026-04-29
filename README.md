@@ -717,22 +717,22 @@ Fill:
 ✅ Step 4: Access ArgoCD UI
  - take any instance public ip and hit browser
 
-  Open in browser:
-   ```sh 
-     https://<YOUR-EC2-IP>:<NODEPORT ip>
-   ```
+Open in browser:
+```sh 
+   https://<YOUR-EC2-IP>:<NODEPORT ip>
+```
 ---
 
 ✅ Step 5: Get login password
 
-   ```sh 
-    kubectl get secret argocd-initial-admin-secret -n argocd -o yaml
-   ```
- - the secret base64 encoded so, you have to decod the secret by runnig the below command
+```sh 
+   kubectl get secret argocd-initial-admin-secret -n argocd -o yaml
+```
+- the secret base64 encoded so, you have to decod the secret by runnig the below command
    ```sh
    echo "secret value" | base64 --decode
    ```
----
+   
    Login:
     - Username: admin
     - Password: (command output)
