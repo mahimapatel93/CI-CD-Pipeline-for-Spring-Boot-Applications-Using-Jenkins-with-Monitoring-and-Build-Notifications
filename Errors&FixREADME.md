@@ -1,276 +1,248 @@
-# 🚀 CI/CD + GitOps Pipeline Setup using Jenkins
+🚀 CI/CD + GitOps Pipeline using Jenkins, Kubernetes & Argo CD
+📌 Project Overview
 
----
+This project implements a complete CI/CD pipeline integrated with GitOps, designed to automate build, testing, security scanning, and deployment on Kubernetes.
 
-## 📌 Overview
+It includes:
 
-This project demonstrates a complete **CI/CD pipeline integrated with GitOps** using:
-
-* Jenkins
-* Docker
-* SonarQube
-* AWS (EC2 + S3 + IAM)
-* Kubernetes (EKS)
-* Argo CD
-* Slack Notifications
-
-The pipeline automates:
-
-* Code checkout
-* Build → Test → SonarQube Analysis → Quality Gate
-* Artifact storage (S3)
-* Docker image build & push
-* Security scanning (Trivy)
-* Deployment using GitOps (Argo CD)
-* Slack notifications
-
----
-
-## 🏗️ Architecture
-
-```
+Automated CI pipeline using Jenkins
+Code quality analysis with SonarQube
+Artifact storage using AWS S3
+Docker image build & push to DockerHub
+Security scanning using Trivy
+GitOps-based deployment using Argo CD
+Slack notifications for pipeline status
+🏗 Architecture Overview
+🔄 CI/CD Flow
 Developer → GitHub → Jenkins CI Pipeline → S3 Artifact Store
                                       → Docker Build & Push → DockerHub
                                       → Manual Approval
                                       → Downstream Pipeline
                                       → GitOps Repo Update → Kubernetes (ArgoCD)
-```
+🚀 Deployment Flow (GitOps)
+Jenkins → Update Kubernetes YAML → Push to GitOps Repo
+        ↓
+Argo CD detects change → Sync → Deploy to Kubernetes
+🧰 Tools & Technologies Used
+⚙️ DevOps Stack
+Jenkins (CI Pipeline)
+Docker (Containerization)
+SonarQube (Code Quality)
+Trivy (Security Scanning)
+☁️ AWS Services
+EC2 (Jenkins + Tools hosting)
+S3 (Artifact Storage)
+IAM (Secure Access)
+☸️ Kubernetes & GitOps
+Amazon EKS (Kubernetes Cluster)
+Argo CD (GitOps Deployment)
+🔔 Integration
+Slack (Notifications)
+GitHub (Source Code & GitOps Repo)
+🔧 CI Pipeline Stages
 
----
+The Jenkins pipeline performs:
 
-## ⚙️ Prerequisites
+Checkout source code from GitHub
+Build application using Maven
+Execute test cases
+Run SonarQube analysis
+Enforce Quality Gate
+Upload artifact to AWS S3
+Build Docker image
+Scan image using Trivy
+Push image to DockerHub
+Cleanup unused images
+Manual approval before deployment
+🚀 CD Pipeline (GitOps)
+Downstream pipeline triggered
+Kubernetes YAML updated using sed
+Changes pushed to GitOps repository
+Argo CD automatically detects changes
+Application deployed to Kubernetes cluster
+🔔 Slack Notifications
 
-* AWS EC2 Instance
-* Jenkins
-* Java 21
-* Maven
-* SonarQube
-* Docker
-* Trivy
-* AWS CLI
-* GitHub Repository
-* DockerHub Account
-* Slack App
-* Kubernetes Cluster (EKS)
-* Argo CD
+Slack integration sends alerts for:
 
----
+✅ Successful builds
+❌ Failed builds
+⚠️ Unstable builds
+🚫 Aborted builds
+⚠️ Issues Faced & Solutions
+1️⃣ GitHub Authentication Failed
 
-## 🔧 CI Pipeline Stages
+Error: Invalid username or token
+Reason: GitHub password authentication deprecated
 
-* Checkout Code
-* Build (Maven)
-* Test
-* SonarQube Analysis
-* Quality Gate
-* Artifact Upload (S3)
-* Docker Build
-* Trivy Scan
-* Docker Push
-* Cleanup
-* Manual Approval
+Fix:
 
----
+Created Personal Access Token (PAT)
+Stored in Jenkins credentials
+Used in pipeline
+2️⃣ Sonar Scanner Not Found
 
-## 🚀 CD Pipeline (GitOps)
+Error: command not found
 
-* Downstream pipeline triggered
-* YAML updated using `sed`
-* Changes pushed to GitOps repository
-* Argo CD syncs automatically
-* Application deployed to Kubernetes
+Reason: Sonar Scanner not installed
 
----
+Fix:
 
-## 🔔 Slack Notifications
+Installed Sonar Scanner
+Configured in Jenkins
+3️⃣ SonarQube Project Not Visible
 
-Integrated Slack notifications for:
+Reason: Incorrect project key or token
 
-* ✅ Success
-* ❌ Failure
-* ⚠️ Unstable builds
-* 🚫 Aborted builds
+Fix:
 
----
+Verified project key
+Regenerated token
+4️⃣ Quality Gate Failure
 
-# ⚠️ Issues Faced & Solutions
+Reason: Code issues (bugs/vulnerabilities)
 
----
+Fix:
 
-## ❌ 1. GitHub Authentication Failed
+Fixed code issues
+Re-ran pipeline
+5️⃣ Docker Permission Issue
 
-**Error:** Invalid username or token
-**Reason:** Password authentication deprecated
-**Solution:** Used GitHub Personal Access Token (PAT)
+Reason: Jenkins user not added to Docker group
 
----
+Fix:
 
-## ❌ 2. Sonar Scanner Not Found
-
-**Error:** command not found
-**Reason:** Not installed
-**Solution:** Installed and configured Sonar Scanner
-
----
-
-## ❌ 3. SonarQube Project Not Visible
-
-**Reason:** Incorrect project key or token
-**Solution:** Verified configuration
-
----
-
-## ❌ 4. Quality Gate Failure
-
-**Reason:** Code issues
-**Solution:** Fixed issues and re-ran pipeline
-
----
-
-## ❌ 5. Docker Permission Issue
-
-**Reason:** Jenkins not in docker group
-
-**Solution:**
-
-```
 sudo usermod -aG docker jenkins
 sudo systemctl restart jenkins
-```
+6️⃣ mvnw Permission Denied
 
----
+Reason: Execution permission missing
 
-## ❌ 6. mvnw Permission Denied
+Fix:
 
-**Solution:**
-
-```
 chmod +x mvnw
-```
+7️⃣ DockerHub Login Failed
 
----
+Reason: Incorrect credentials
 
-## ❌ 7. DockerHub Login Failed
+Fix:
 
-**Reason:** Incorrect credentials
-**Solution:** Used Jenkins credentials
+Used Jenkins credentials securely
+8️⃣ Trivy Scan Issues
 
----
+Reason: Timeout / large DB download
 
-## ❌ 8. Trivy Scan Issue
+Fix:
 
-**Solution:**
-
-```
 --skip-java-db-update
 --timeout 5m
-```
+9️⃣ Git Push Permission Denied (403)
 
----
+Reason: No write access to repository
 
-## ❌ 9. Git Push Permission Denied
+Fix:
 
-**Reason:** No repository access
-**Solution:** Used personal repo / GitHub token
+Used personal repository
+Used GitHub token
+🔟 Branch Not Found
 
----
+Reason: Incorrect branch name
 
-## ❌ 10. Branch Not Found
+Fix:
 
-**Reason:** Incorrect branch name
-**Solution:** Used correct branch (`main`)
+Used correct branch: main
+1️⃣1️⃣ Slack Notification Not Working
 
----
+Reason: Bot not added to channel
 
-## ❌ 11. Slack Notification Not Working
+Fix:
 
-**Reason:** Bot not added to channel
-**Solution:** Enabled `botUser: true` and invited bot
+Enabled botUser: true
+Invited bot to Slack channel
+1️⃣2️⃣ Argo CD ApplicationSet Error
 
----
+Error: no matches for kind "ApplicationSet"
 
-## ❌ 12. Argo CD ApplicationSet Error
+Reason: Missing CRD
 
-**Error:** no matches for kind ApplicationSet
-**Reason:** Missing CRD
-**Solution:** Installed required CRD
+Fix:
 
----
+Installed ApplicationSet CRD
+Restarted controller
+1️⃣3️⃣ Argo CD UI Not Accessible
 
-## ❌ 13. Argo CD UI Not Accessible
+Error: ERR_CONNECTION_TIMED_OUT
 
-**Error:** ERR_CONNECTION_TIMED_OUT
+Root Causes:
+AWS Security Group blocking ports
+Wrong service type
+Mistake:
 
-**Reason:**
+Argo CD service was ClusterIP, but accessed externally
 
-* AWS Security Group blocking ports
-* Service misconfiguration
-
-**Mistake:**
-`argocd-server` service was in **ClusterIP mode**, but accessed externally
-
-**Solution:**
-
-```
+Fix:
 kubectl edit svc argocd-server -n argocd
-```
 
-Updated:
+Changed:
 
-* ClusterIP → NodePort
+ClusterIP → NodePort
 
 Access using:
 
-```
 http://<EC2-PUBLIC-IP>:<NODEPORT>
-```
+1️⃣4️⃣ NodePort Not Working
 
----
+Reason:
 
-## ❌ 14. HTTP vs HTTPS Issue
+Tried accessing via localhost
+AWS networking restrictions
 
-**Reason:** Argo CD runs on HTTPS
-**Solution:** Used `https` instead of `http`
+Fix:
 
----
+Used EC2 public IP
+Opened port in Security Group
+1️⃣5️⃣ HTTP vs HTTPS Issue
 
-## ❌ 15. Partial Argo CD Installation
+Reason: Argo CD runs on HTTPS
 
-**Reason:** Incomplete installation
-**Solution:** Reinstalled Argo CD properly
+Fix:
 
----
+Used https:// instead of http://
+1️⃣6️⃣ Port Already in Use
 
-## 🎯 Key Learnings
+Error: bind: address already in use
 
-* Debugging is critical in DevOps
-* AWS Security Groups are very important
-* Always verify Kubernetes services
-* CRDs are required in Argo CD
-* Use secure credentials
-* Small mistakes can break pipelines
+Reason: Port already occupied
 
----
+Fix:
 
-## ✅ Final Outcome
+Used alternate port (e.g., 9090)
+1️⃣7️⃣ Partial Argo CD Installation
 
-* Fully automated CI/CD pipeline
-* GitOps deployment using Argo CD
-* Docker + Security scanning integrated
-* Slack notifications working
-* End-to-end DevSecOps pipeline implemented
+Reason: Incomplete setup
 
----
+Fix:
 
-## 🚀 Conclusion
+Reinstalled Argo CD properly
+🎯 Key Learnings
+Debugging is the most important DevOps skill
+AWS Security Groups play a critical role
+Always verify Kubernetes service types
+CRDs are essential in Kubernetes-based tools
+Use secure credentials (tokens, not passwords)
+Small configuration mistakes can break entire pipelines
+✅ Final Outcome
+Fully automated CI/CD pipeline
+GitOps deployment using Argo CD
+Docker build + security scanning integrated
+Slack notifications working
+End-to-end DevSecOps pipeline implemented
+🚀 Conclusion
 
 This project demonstrates real-world DevOps practices including:
 
-* CI/CD automation
-* Secure deployments
-* GitOps workflow
-* Kubernetes orchestration
+CI/CD automation
+Secure deployments
+GitOps workflow
+Kubernetes orchestration
 
-It also highlights practical debugging and problem-solving skills.
-
----
+It also highlights strong debugging and problem-solving skills required in production environments.
