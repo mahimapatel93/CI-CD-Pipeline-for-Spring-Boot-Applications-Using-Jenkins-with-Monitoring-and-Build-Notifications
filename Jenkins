@@ -20,7 +20,7 @@ pipeline {
                     branches: [[name: '*/main']],
                     extensions: [],
                     userRemoteConfigs: [[
-                        url: 'https://github.com/mahimapatel93/CI-CD-Pipeline-for-Spring-Boot-Applications.git'
+                        url: 'https://github.com/mahimapatel93/CI-CD-Pipeline-for-Spring-Boot-Applications-Using-Jenkins-with-Monitoring-and-Build-Notifications.git'
                     ]]
                 )
             }
