@@ -592,7 +592,141 @@ Fill:
 
 ---
 
-## 🔄 Final Workflow
+## 🚀 ArgoCD Setup (GitOps Deployment)
+✅ Step 1: Make sure Kubernetes is ready
+
+You must have:
+
+  A running Kubernetes cluster (EKS / Minikube / K8s on EC2)
+  kubectl configured
+
+#### Pre-requisites: 
+  - an EC2 Instance 
+
+#### AWS EKS Setup 
+1. Setup kubectl   
+   a. Download kubectl version 1.20  
+   b. Grant execution permissions to kubectl executable   
+   c. Move kubectl onto /usr/local/bin   
+   d. Test that your kubectl installation was successful    
+   ```sh 
+   curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl
+   chmod +x ./kubectl
+   mv ./kubectl /usr/local/bin 
+   kubectl version --short --client
+   ```
+2. Setup eksctl   
+   a. Download and extract the latest release   
+   b. Move the extracted binary to /usr/local/bin   
+   c. Test that your eksclt installation was successful   
+   ```sh
+   curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+   sudo mv /tmp/eksctl /usr/local/bin
+   eksctl version
+   ```
+  
+3. Create an IAM Role and attache it to EC2 instance    
+   `Note: create IAM user with programmatic access if your bootstrap system is outside of AWS`   
+   IAM user should have access to   
+   IAM   
+   EC2   
+   VPC    
+   CloudFormation
+
+4. Create your cluster and nodes 
+   ```sh
+   eksctl create cluster --name cluster-name  \
+   --region region-name \
+   --node-type instance-type \
+   --nodes-min 2 \
+   --nodes-max 2 \ 
+   --zones <AZ-1>,<AZ-2>
+   
+   example:
+   eksctl create cluster --name naresh \
+      --region us-east-1 \
+   --node-type t2.small \
+
+
+5. To delete the EKS clsuter 
+   ```sh 
+   eksctl delete cluster naresh --region ap-south-1
+   ```
+   
+6. Validate your cluster using by creating by checking nodes and by creating a pod 
+   ```sh 
+   kubectl get nodes
+   ```
+
+✅ Step 2: Install ArgoCD
+   ```sh 
+    kubectl create namespace argocd
+   ```
+   ```sh 
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+   ```
+
+✅ Step 3: Expose ArgoCD UI
+
+    kubectl patch svc argocd-server -n argocd \ -p '{"spec": {"type": "NodePort"}}'
+Check service:
+
+    kubectl get svc -n argocd
+-👉 Note the NodePort (example: 30007)
+
+✅ Step 4: Access ArgoCD UI
+
+Open in browser:
+  ```sh 
+    http://<YOUR-EC2-IP>:<NODEPORT>
+  ```
+
+✅ Step 5: Get login password
+   ```sh 
+    kubectl get secret argocd-initial-admin-secret -n argocd \ -o jsonpath="{.data.password}" | base64 -d
+   ```
+
+Login:
+- Username: admin
+- Password: (command output)
+
+✅ Step 6: Connect your GitOps repository
+
+    This should be your repo where Kubernetes YAML files exist
+    (the same repo Jenkins updates using sed)
+
+✅ Step 7: Create Application in ArgoCD
+
+In ArgoCD UI:
+
+General:
+
+     Application Name: datastore-app
+     Project: default
+Source:
+
+    Repo URL: your GitOps repo URL
+    Branch: main
+    Path: folder where YAML exists (e.g. datastore-deploy)
+Destination:
+
+    Cluster: https://kubernetes.default.svc
+    Namespace: default (or your custom namespace)
+
+✅ Step 8: Enable Auto Sync
+
+Enable:
+
+    ✅ Auto Sync
+    ✅ Self Heal
+
+✅ Step 9: Deploy Application
+
+Click:
+
+    👉 Create → Sync
+    
+ ## 🔄 Final Workflow
 
     Code Push → GitHub  
         ↓  
